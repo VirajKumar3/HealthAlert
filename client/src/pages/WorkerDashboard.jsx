@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL;
 import { useAuth } from '../context/AuthContext';
 import { 
   AlertCircle, ShieldAlert, CheckCircle, Clock, MapPin, 
@@ -62,7 +63,7 @@ const WorkerDashboard = () => {
 
   const fetchAlerts = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/emergency/active');
+      const { data } = await axios.get(`${API_URL}/api/emergency/active`);
       setAlerts(data);
       setLoading(false);
     } catch(err) {
@@ -73,7 +74,7 @@ const WorkerDashboard = () => {
 
   const handleResolve = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/emergency/${id}/resolve`);
+      await axios.put(`${API_URL}/api/emergency/${id}/resolve`);
       // Since we emit 'alert_resolved' from backend, it will be handled by the socket listener
       handleAlertResolved(id);
     } catch(err) {
@@ -92,7 +93,7 @@ const WorkerDashboard = () => {
     } catch (err) {}
     
     try {
-      await axios.post('http://localhost:5000/api/emergency', { location });
+      await axios.post(`${API_URL}/api/emergency`, { location });
       // Reset pulsing state after brief duration
       setTimeout(() => setAlerting(false), 2000);
     } catch (err) {

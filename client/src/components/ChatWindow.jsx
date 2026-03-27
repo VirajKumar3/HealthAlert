@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import socket from '../services/socket';
 import { useAuth } from '../context/AuthContext';
+
+const API_URL = import.meta.env.VITE_API_URL;
+
 import { Send, X, ShieldAlert, HeartPulse, MessageCircle, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -41,7 +44,7 @@ const ChatWindow = ({ emergencyId, recipientName, onClose }) => {
 
   const fetchMessages = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:5000/api/messages/${emergencyId}`);
+      const { data } = await axios.get(`${API_URL}/api/messages/${emergencyId}`);
       setMessages(data);
       setLoading(false);
     } catch (err) {
@@ -54,7 +57,7 @@ const ChatWindow = ({ emergencyId, recipientName, onClose }) => {
     if (!newMessage.trim()) return;
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/messages', {
+      const { data } = await axios.post(`${API_URL}/api/messages`, {
         emergencyId,
         content: newMessage
       });

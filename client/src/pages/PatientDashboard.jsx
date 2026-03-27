@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL;
 import { useAuth } from '../context/AuthContext';
 import { AlertTriangle, Save, HeartPulse, User, MessageSquare, ClipboardList, Activity } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -48,7 +49,7 @@ const PatientDashboard = () => {
 
   const fetchActiveAlert = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/emergency/my-active');
+      const { data } = await axios.get(`${API_URL}/api/emergency/my-active`);
       if (data) {
         setAlerting(true);
         setActiveEmergencyId(data._id);
@@ -60,7 +61,7 @@ const PatientDashboard = () => {
 
   const fetchDetails = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/patient');
+      const { data } = await axios.get(`${API_URL}/api/patient`);
       if (data && data.age) {
         setDetails(data);
         setHasDetails(true);
@@ -76,7 +77,7 @@ const PatientDashboard = () => {
     setError('');
     setSuccess('');
     try {
-      await axios.post('http://localhost:5000/api/patient', details);
+      await axios.post(`${API_URL}/api/patient`, details);
       setHasDetails(true);
       setSuccess('Health records updated successfully!');
       setTimeout(() => setSuccess(''), 3000);
@@ -109,7 +110,7 @@ const PatientDashboard = () => {
     }
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/emergency', { location });
+      const { data } = await axios.post(`${API_URL}/api/emergency`, { location });
       setActiveEmergencyId(data._id);
       setSuccess('EMERGENCY ALERT SENT! Help is on the way.');
       setTimeout(() => setSuccess(''), 5000);
