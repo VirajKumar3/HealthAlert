@@ -14,13 +14,13 @@ In your `server/index.js`, update the Socket.io and Express CORS to explicitly a
 ```javascript
 const io = new Server(server, {
   cors: {
-    origin: ['http://localhost:5173', 'https://your-production-frontend-url.vercel.app'],
+    origin: ['http://localhost:5173', 'https://health-alert-one.vercel.app'],
     methods: ['GET', 'POST'],
   },
 });
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://your-production-frontend-url.vercel.app']
+  origin: ['http://localhost:5173', 'https://health-alert-one.vercel.app']
 }));
 ```
 
@@ -49,7 +49,7 @@ Render is great for Node.js backends carrying WebSockets.
    - **Start Command:** `npm start`
 6. Add **Environment Variables**:
    - `PORT`: `5000` (Render will assign its own, but it's safe to set this)
-   - `MONGO_URI`: `mongodb+srv://<user>:<password>@cluster...` (Your MongoDB Atlas connection string)
+   - `MONGODB_URI`: `mongodb+srv://<user>:<password>@cluster...` (Your MongoDB Atlas connection string)
    - `JWT_SECRET`: Generate a random long string for this.
 7. Click **Create Web Service**. 
 8. Once deployed, copy the Render URL (e.g., `https://health-alert-backend.onrender.com`).

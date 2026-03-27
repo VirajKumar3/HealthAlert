@@ -15,13 +15,14 @@ const server = http.createServer(app);
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
-  process.env.CLIENT_URL || 'https://your-production-frontend-url.vercel.app'
+  'http://localhost:5175',
+  process.env.CLIENT_URL || 'https://health-alert-one.vercel.app'
 ];
 
 const io = new Server(server, {
   cors: {
     origin: allowedOrigins,
-    methods: ['GET', 'POST'],
+    methods: ["GET", "POST"],
     credentials: true
   },
 });
@@ -31,6 +32,12 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
+
+// Request logger
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
 
 // Socket.io connection logic
 io.on('connection', (socket) => {
