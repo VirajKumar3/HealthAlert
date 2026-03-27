@@ -3,7 +3,7 @@ import axios from 'axios';
 import socket from '../services/socket';
 import { useAuth } from '../context/AuthContext';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 import { Send, X, ShieldAlert, HeartPulse, MessageCircle, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
